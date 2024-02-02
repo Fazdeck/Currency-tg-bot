@@ -53,14 +53,6 @@ def get_eur_rate(call):
                      parse_mode='Markdown')
 
 
-@bot.callback_query_handler(func=lambda call: call.data == 'RUB_rate')
-def get_rub_rate(call):
-    bot.edit_message_text(chat_id=call.message.chat.id,
-                     message_id=call.message.id,
-                     text=f'Курс продажу*{RUB_buy}*\nКурс купівлі *{RUB_sale}',
-                     parse_mode='Markdown')
-
-
 @bot.callback_query_handler(func=lambda call: call.data == 'UAH_to_USD')
 def get_uah_to_usd(call):
     msg = bot.edit_message_text(chat_id=call.message.chat.id,
@@ -134,43 +126,3 @@ def uah_to_eur(msg):
         msg = bot.send_message(chat_id=msg.chat.id,
                                text=f'Ви не ввели суму. Спробуйте ще!')
         bot.register_next_step_handler(message=msg, callback=get_uah_to_eur)
-
-
-@bot.callback_query_handler(func=lambda call: call.data == 'UAH_to_RUB')
-def get_uah_to_rub(call):
-    msg = bot.edit_message_text(chat_id=call.message.id,
-                     message_id=call.message.id,
-                     text='Введіть суму у гривнях: ')
-    bot.register_next_step_handler(message=msg, callback=get_uah_to_rub)
-
-
-def uan_to_rub(msg):
-    try:
-        uah = float(msg.text)
-        bot.send_message(chat_id=msg.chat.id,
-                         text=f'На {uah} ₴ можете купити {round(uah/RUB_sale, 2)} ₽')
-    except ValueError:
-        msg = bot.send_message(chat_id=msg.chat.id,
-                               text=f'Ви не ввели суму. Спробуйте ще!')
-        bot.register_next_step_handler(message=msg, callback=get_uah_to_rub)
-
-
-@bot.callback_query_handler(func=lambda call: call.data == 'RUB_to_UAH')
-def get_rub_to_uah(call):
-    msg = bot.edit_message_text(chat_id=call.message.id,
-                     message_id=call.message.id,
-                     text='Введіть суму у рублях: ')
-    bot.register_next_step_handler(message=msg, callback=get_rub_to_uah)
-
-
-def rub_to_uah(msg):
-    try:
-        rub = float(msg.text)
-        bot.send_message(chat_id=msg.chat.id,
-                         text=f'На {rub} ₽ можете купити {round(RUB_buy*rub, 2)} ₴')
-    except ValueError:
-        msg = bot.send_message(chat_id=msg.chat.id,
-                               text=f'Ви не ввели суму. Спробуйте ще!')
-        bot.register_next_step_handler(message=msg, callback=get_rub_to_uah)
-
-
