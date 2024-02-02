@@ -14,7 +14,3 @@ USD_buy = float(data[0]['rateBuy'])
 
 EUR_sale = float(data[1]['rateSell'])
 EUR_buy = float(data[1]['rateBuy'])
-
-
-RUB_sale = float(data[2]['rateSell'])
-RUB_buy = float(data[2]['rateBuy'])
